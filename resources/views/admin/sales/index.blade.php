@@ -3,15 +3,17 @@
 @section('title', 'Sales')
 
 @section('content_header')
+    @can('create', \App\Models\Sale::class)
     <div class="row">
         <div class="col-sm-2 col-sm-offset-10">
             <a href="{{ route('sales.create') }}" class="btn btn-block btn-primary"><i class="fa fa-plus-circle"></i> Add new</a>
         </div>
     </div>
+    @endcan
 @stop
 
 @section('content')
-    @can('view', \App\Models\Sale::class)
+    @can('view', $sales[0])
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -171,7 +173,7 @@
         </div>
     </div>
     @endcan
-    @cannot('create', \App\Models\Sale::class)
+    @cannot('view', $sales)
         You are not authorize for this entity
     @endcannot
 
