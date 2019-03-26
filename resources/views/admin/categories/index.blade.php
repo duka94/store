@@ -101,7 +101,7 @@
                                             <td>{{ $category->createdBy->name }}</td>
                                             <td>{{ $category->created_at->format('d/m/Y') }}</td>
                                             <td>@if($category->updatedBy) {{ $category->updatedBy->name }} @endif</td>
-                                            <td>@if($category->updated_at){{ $category->updated_at->format('d/m/Y') }} @endif</td>
+                                            <td>@if($category->updatedBy){{ $category->updated_at->format('d/m/Y') }} @endif</td>
                                             <td>
                                                 <div class="data-table-actions">
                                                     <div class="col-xs-4">

@@ -21,7 +21,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function category_can_be_created()
     {
-        $category = factory(Category::class)->make(['created_by' => null]);
+        $category = factory(Category::class)->make();
 
         $response = $this->post('admin/categories', $category->toArray());
 

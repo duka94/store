@@ -163,7 +163,7 @@
                                             <td>{{ $product->createdBy->name }}</td>
                                             <td>{{ $product->created_at->format('d/m/Y') }}</td>
                                             <td>@if($product->updatedBy) {{ $product->updatedBy->name }} @endif</td>
-                                            <td>@if($product->updated_at){{ $product->updated_at->format('d/m/Y') }} @endif</td>
+                                            <td>@if($product->updatedBy){{ $product->updated_at->format('d/m/Y') }} @endif</td>
                                             <td>
                                                 <div class="data-table-actions">
                                                     <div class="col-xs-4">

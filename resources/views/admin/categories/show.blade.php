@@ -12,6 +12,12 @@
 @section('content')
     <div>
         <h2>Category: {{ $category->name }}</h2>
+        <p>Created by: {{ $category->createdBy->name }}</p>
+        <p>Created at: {{ $category->created_at->format('d/m/Y') }}</p>
+        @if($category->updatedBy)
+            <p>Updated by: {{ $category->updatedBy->name }}</p>
+            <p>Updated at: {{ $category->updated_at->format('d/m/Y') }}</p>
+        @endif
         @if($category->products)
             <p><b>Products:</b></p>
             @foreach($category->products as $product)

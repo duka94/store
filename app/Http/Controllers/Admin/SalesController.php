@@ -44,14 +44,12 @@ class SalesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SaleRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(SaleRequest $request)
     {
         $saleData = $request->only(['title', 'date_to']);
-        $saleData['created_by'] = auth()->user()->id;
-
         $productData = $request->only('products', 'discount');
 
         DB::beginTransaction();
@@ -71,7 +69,7 @@ class SalesController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            $e->getMessage();
+            return $e->getMessage();
         }
 
         return redirect()->route('sales.index')->with([
@@ -82,20 +80,9 @@ class SalesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  Sale $sale
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -109,7 +96,7 @@ class SalesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SaleRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -117,7 +104,6 @@ class SalesController extends Controller
     {
         $sale = Sale::with('products')->find($id);
         $saleData = $request->only(['title', 'date_to']);
-        $saleData['updated_by'] = auth()->user()->id;
 
         $saleProductData = app(SaleService::class)->setSale($sale)->prepareUpdateProduct($request->only('products', 'discount'));
 
@@ -150,13 +136,11 @@ class SalesController extends Controller
     public function destroy($id)
     {
         $sale = Sale::with('products')->find($id);
-        $sale->deleted_by = auth()->user()->id;
         $saleProducts = app(SaleService::class)->setSale($sale)->prepareDeleteProducts();
 
         DB::beginTransaction();
 
         try {
-            $sale->save();
             $sale->products()->attach($saleProducts);
             $sale->delete();
 

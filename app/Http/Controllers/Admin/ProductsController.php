@@ -42,16 +42,15 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param   \App\Http\Requests\Requests\ProductStoreRequest;
+     * @param  \App\Http\Requests\ProductStoreRequest;
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProductStoreRequest $request)
     {
         $data = $request->only(['code', 'name', 'description', 'price', 'category_id']);
-        $data['created_by'] = auth()->user()->id;
-        $data['updated_by'] = auth()->user()->id;
         $file = Storage::put('public/products', $request->file('img_path'));
         $data['img_path'] = str_replace('public/', '', $file);
+
         Product::create($data);
 
         return redirect()->route('products.index')->with([
@@ -91,14 +90,14 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Requests\ProductUpdateRequest $request;
+     * @param \App\Http\Requests\ProductUpdateRequest $request;
      * @param  Product  $product
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProductUpdateRequest $request, Product $product)
     {
         $data = $request->only(['code', 'name', 'description', 'price', 'category_id']);
-        $data['updated_by'] = auth()->user()->id;
+
         if($request->file('img_path')) {
             Storage::delete($product->img_path);
             $file = Storage::put('public/products', $request->file('img_path'));
@@ -122,8 +121,6 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->deleted_by = auth()->user()->id;
-        $product->save();
         $product->delete();
 
         return redirect()->route('products.index')->with([

@@ -37,16 +37,12 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Requests\CategoryRequest;
+     * @param \App\Http\Requests\CategoryRequest;
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CategoryRequest $request)
     {
-        $data = $request->only(['name']);
-        $data['created_by'] = auth()->user()->id;
-        $data['updated_by'] = auth()->user()->id;
-
-        Category::create($data);
+        Category::create($request->only(['name']));
 
         return redirect()->route('categories.index')->with([
             'title' => 'Created!',
@@ -96,9 +92,7 @@ class CategoriesController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        $data = $request->only(['name']);
-        $data['updated_by'] = auth()->user()->id;
-        $category->update($data);
+        $category->update($request->only(['name']));
 
         return redirect()->route('categories.index')->with([
             'title' => 'Updated!',
@@ -116,11 +110,9 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->deleted_by = auth()->user()->id;
 
         DB::beginTransaction();
         try {
-            $category->save();
             $category->delete();
             $category->products()->delete();
 
