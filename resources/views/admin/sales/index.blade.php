@@ -13,7 +13,7 @@
 @stop
 
 @section('content')
-    @can('view', $sales[0])
+    @can('view', \App\Models\Sale::class)
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
