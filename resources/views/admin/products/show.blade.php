@@ -10,22 +10,24 @@
     </div>@stop
 
 @section('content')
-    <div>
-        <h2>Product: {{ $product->name }}</h2>
-        <p><b>Code:</b> {{ $product->code }}</p>
-        <p><b>Price:</b> {{ $product->price }}</p>
-        <p><b>Img:</b> {{ $product->img_path }}</p>
-        <p><b>Created by:</b> {{ $product->createdBy->name }}</p>
-        <p><b>Created at:</b> {{ $product->created_at->format('d/m/Y') }}</p>
-        @if($product->updatedBy)
-        <p><b>Updated by:</b> {{ $product->updatedBy->name }}</p>
-        <p><b>Updated at:</b> {{ $product->updated_at->format('d/m/Y') }}</p>
-        @endif
-        <p><b>Category:</b> {{ $product->category->name }}</p>
-        <p><b>Description:</b> {{ $product->description }}</p>
-        <p>
-            <b>Image:</b>
-            <img src="{{url("storage/{$product->img_path}")}}">
-        </p>
+    <div class="box">
+        <h2 class="box-header">Product: {{ $product->name }}</h2>
+        <div class="box-body">
+            <p><b>Code:</b> {{ $product->code }}</p>
+            <p><b>Price:</b> {{ $product->price }}</p>
+            <p><b>Img:</b> {{ $product->img_path }}</p>
+            <p><b>Created by:</b> {{ $product->createdBy->name }}</p>
+            <p><b>Created at:</b> {{ $product->created_at->format('d/m/Y') }}</p>
+            @if($product->updatedBy)
+                <p><b>Updated by:</b> {{ $product->updatedBy->name }}</p>
+                <p><b>Updated at:</b> {{ $product->updated_at->format('d/m/Y') }}</p>
+            @endif
+            <p><b>Category:</b> {{ $product->category->name }}</p>
+            <p><b>Description:</b> {{ $product->description }}</p>
+            <p>
+                <b>Image:</b>
+                <img src="{{url("storage/{$product->img_path}")}}">
+            </p>
+        </div>
     </div>
 @stop

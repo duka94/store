@@ -10,21 +10,23 @@
     </div>@stop
 
 @section('content')
-    <div>
-        <h2>Category: {{ $category->name }}</h2>
-        <p>Created by: {{ $category->createdBy->name }}</p>
-        <p>Created at: {{ $category->created_at->format('d/m/Y') }}</p>
-        @if($category->updatedBy)
-            <p>Updated by: {{ $category->updatedBy->name }}</p>
-            <p>Updated at: {{ $category->updated_at->format('d/m/Y') }}</p>
-        @endif
-        @if($category->products)
-            <p><b>Products:</b></p>
-            @foreach($category->products as $product)
-                <div>
-                    <p>{{$loop->iteration}}.<b>Name:</b> {{$product->name}}</p>
-                </div>
-            @endforeach
-        @endif
+    <div class="box">
+        <h2 class="box-header">Category: {{ $category->name }}</h2>
+        <div class="box-body">
+            <p>Created by: {{ $category->createdBy->name }}</p>
+            <p>Created at: {{ $category->created_at->format('d/m/Y') }}</p>
+            @if($category->updatedBy)
+                <p>Updated by: {{ $category->updatedBy->name }}</p>
+                <p>Updated at: {{ $category->updated_at->format('d/m/Y') }}</p>
+            @endif
+            @if($category->products)
+                <p><b>Products:</b></p>
+                @foreach($category->products as $product)
+                    <div>
+                        <p>{{$loop->iteration}}.<b>Name:</b> {{$product->name}}</p>
+                    </div>
+                @endforeach
+            @endif
+        </div>
     </div>
 @stop
