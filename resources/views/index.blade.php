@@ -42,6 +42,9 @@
 
             .content {
                 text-align: center;
+                max-width: 1800px;
+                width: 100%;
+                margin: auto;
             }
 
             .title {
@@ -61,6 +64,36 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .flex {
+                display: flex;
+            }
+            .flex-wrap {
+                flex-wrap: wrap;
+            }
+            .product {
+                padding: 20PX;
+                border: 1px solid black;
+                margin: 20px 20px;
+                max-width: 500px;
+                width: 100%;
+            }
+            .flex-column {
+                flex-direction: column;
+            }
+            .product-information {
+                padding: 20px;
+                border-left: 1px solid black;
+                margin-left: 25px;
+                flex: 2;
+            }
+            .product-image {
+                display: flex;
+                align-items: center;
+            }
+            .margin-bottom-100 {
+                margin-bottom: 100px;
+            }
         </style>
     </head>
     <body>
@@ -68,26 +101,39 @@
                 <div class="title m-b-md">
                     Store
                 </div>
-                @if($products->isNotEmpty())
-                <div>
-                    <h2>Products</h2>
-                    @foreach($products as $product)
-                        <p><b>Name:</b>{{$product->name}}</p>
-                        <p><b>Price:</b>{{$product->price}}</p>
-                    @endforeach
-                </div>
-                @endif
                 @if($sales->isNotEmpty())
-                    <div>
+                    <div class="margin-bottom-100">
                         <h2>Sales</h2>
                         @foreach($sales as $sale)
-                            <a href="{{url("sales/$sale->id")}}">{{$sale->title}}</a>
+                            <div>
+                                <b>{{$loop->iteration}}.</b>
+                                <a href="{{url("sales/$sale->id")}}">{{$sale->title}}</a>
+                            </div>
                         @endforeach
                     </div>
                 @else
                     <div>Currently we don't have discount on these products</div>
                 @endif
-
+                @if($products->isNotEmpty())
+                <div>
+                    <h2>Products</h2>
+                    <div class="flex flex-wrap">
+                    @foreach($products as $product)
+                        <div class="product flex">
+                            <div class="product-image">
+                                <img src="{{url("storage/$product->img_path")}}" alt="" width="100px">
+                            </div>
+                            <div class="flex flex-column product-information">
+                                <p><b>Code:</b>{{$product->code}}</p>
+                                <p><b>Name:</b>{{$product->name}}</p>
+                                <p><b>Price:</b>{{$product->price}}</p>
+                                <p>{!! $product->description !!}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                    </div>
+                </div>
+                @endif
             </div>
     </body>
 </html>
